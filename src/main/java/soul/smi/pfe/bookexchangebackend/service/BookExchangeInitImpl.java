@@ -127,7 +127,8 @@ public class BookExchangeInitImpl implements BookExchangeInit {
     @Override
     public void initUserImages() {
         for (int i = 0; i < 5; i++) {
-            File file=new File(System.getProperty("user.home")+"/book/profile/"+((int)(Math.random()*2)+1)+".jpg");
+//            File file=new File(System.getProperty("user.home")+"/book/profile/"+((int)(Math.random()*2)+1)+".jpg");
+            File file=new File("initImages/book/profile/"+((int)(Math.random()*2)+1)+".jpg");
             Path path= Paths.get(file.toURI());
             try {
                 byte[] picContent = Files.readAllBytes(path);
@@ -146,7 +147,8 @@ public class BookExchangeInitImpl implements BookExchangeInit {
     @Override
     public void initBookImages () {
         for (int i = 0; i < 5; i++) {
-            File file=new File(System.getProperty("user.home")+"/book/bookImages/"+((int)(Math.random()*3)+1)+".jpg");
+//            File file=new File(System.getProperty("user.home")+"/book/bookImages/"+((int)(Math.random()*3)+1)+".jpg");
+            File file=new File("initImages/book/bookImages/"+((int)(Math.random()*3)+1)+".jpg");
             Path path= Paths.get(file.toURI());
             try {
                 byte[] picContent = Files.readAllBytes(path);
