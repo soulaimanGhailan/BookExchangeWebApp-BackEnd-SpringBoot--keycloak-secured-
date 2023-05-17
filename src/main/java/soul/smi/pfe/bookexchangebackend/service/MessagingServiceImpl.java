@@ -1,7 +1,7 @@
 package soul.smi.pfe.bookexchangebackend.service;
 
-import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import soul.smi.pfe.bookexchangebackend.dtos.MessageDTO;
 import soul.smi.pfe.bookexchangebackend.exeptions.MessageEmtyExeption;
 import soul.smi.pfe.bookexchangebackend.exeptions.MessageNotFoundExeption;

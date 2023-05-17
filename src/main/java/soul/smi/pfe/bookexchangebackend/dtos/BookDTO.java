@@ -22,7 +22,7 @@ public class BookDTO {
     private Date addingDate;
     private Integer editionNumber;
 //    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private RegisteredUserDTO owner ;
+    private UserEntityDTO owner ;
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Collection<CommentDTO> comments;
 }

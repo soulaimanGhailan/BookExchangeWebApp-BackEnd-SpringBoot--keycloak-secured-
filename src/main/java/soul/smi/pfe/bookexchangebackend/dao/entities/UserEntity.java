@@ -1,21 +1,30 @@
 package soul.smi.pfe.bookexchangebackend.dao.entities;
-;
-import jakarta.persistence.*;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import java.util.Collection;
+import java.util.Date;
 
 @Entity
 @Data
-@AllArgsConstructor @NoArgsConstructor
-@Inheritance(strategy = InheritanceType.JOINED)
-public class RegisteredUser extends User{
+@AllArgsConstructor
+@NoArgsConstructor
+public class UserEntity {
     @Id
     private String userId;
-    private String userPassword;
     private String email;
+    private String firstname;
+    private String username;
+    private String lastname;
+    private String phoneNumber;
+    private String job;
+    private Date birthday;
     @OneToOne
     private Picture profilePic;
     @OneToMany(mappedBy = "sender")
@@ -28,5 +37,4 @@ public class RegisteredUser extends User{
     private Collection<Comment> comments;
     @OneToOne
     private UserAddress address;
-
 }

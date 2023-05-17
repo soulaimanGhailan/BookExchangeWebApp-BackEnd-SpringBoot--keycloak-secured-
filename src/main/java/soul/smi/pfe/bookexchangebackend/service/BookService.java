@@ -1,9 +1,6 @@
 package soul.smi.pfe.bookexchangebackend.service;
 
-import soul.smi.pfe.bookexchangebackend.dtos.BookDTO;
-import soul.smi.pfe.bookexchangebackend.dtos.CommentDTO;
-import soul.smi.pfe.bookexchangebackend.dtos.PageInfo;
-import soul.smi.pfe.bookexchangebackend.dtos.RegisteredUserDTO;
+import soul.smi.pfe.bookexchangebackend.dtos.*;
 import soul.smi.pfe.bookexchangebackend.exeptions.UserNotFoundExeption;
 import soul.smi.pfe.bookexchangebackend.exeptions.bookNotFoundExeption;
 
@@ -24,7 +21,7 @@ public interface BookService {
     List<BookDTO> getAllBooksPage(int page, int size);
     List<BookDTO> getBookByTitle(String title, int page, int size);
     List<BookDTO> getBookByKeyword(String keyword, int page, int size);
-    RegisteredUserDTO getOwnerOfBook(Long bookId) throws bookNotFoundExeption;
+    UserEntityDTO getOwnerOfBook(Long bookId) throws bookNotFoundExeption;
     PageInfo getPageInfo( int size);
     PageInfo getPageInfoOfSimilarBook(int size , String keyword);
     String[] getBooksCategories();

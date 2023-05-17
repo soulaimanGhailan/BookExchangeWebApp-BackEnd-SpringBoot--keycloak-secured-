@@ -4,9 +4,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import soul.smi.pfe.bookexchangebackend.dao.entities.Comment;
-import soul.smi.pfe.bookexchangebackend.dao.entities.RegisteredUser;
 import soul.smi.pfe.bookexchangebackend.dao.enums.CommentType;
-import soul.smi.pfe.bookexchangebackend.dtos.CommentDTO;
 
 import java.util.List;
 

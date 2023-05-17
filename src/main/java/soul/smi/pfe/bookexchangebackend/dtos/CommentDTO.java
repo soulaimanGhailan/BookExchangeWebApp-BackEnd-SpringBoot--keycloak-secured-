@@ -11,6 +11,6 @@ public class CommentDTO {
     private String commentContent;
     private Date commentDate ;
     private CommentType commentType;
-    private RegisteredUserDTO owner;
+    private UserEntityDTO owner;
     private PageInfo repliesPageInfo;
 }

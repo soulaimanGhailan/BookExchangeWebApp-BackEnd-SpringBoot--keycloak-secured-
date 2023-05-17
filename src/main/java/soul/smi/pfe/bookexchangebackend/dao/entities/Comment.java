@@ -1,12 +1,10 @@
 package soul.smi.pfe.bookexchangebackend.dao.entities;
-
-import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import soul.smi.pfe.bookexchangebackend.dao.enums.CommentType;
 
+import javax.persistence.*;
 import java.util.Collection;
 import java.util.Date;
 
@@ -21,7 +19,7 @@ public class Comment {
     private String commentContent;
     private Date commentDate ;
     @ManyToOne
-    private RegisteredUser owner;
+    private UserEntity owner;
     @ManyToOne
 //    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Book commentBook;

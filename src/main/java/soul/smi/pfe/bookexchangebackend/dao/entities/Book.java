@@ -1,6 +1,5 @@
 package soul.smi.pfe.bookexchangebackend.dao.entities;
 
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,6 +7,7 @@ import soul.smi.pfe.bookexchangebackend.dao.enums.BookCategory;
 import soul.smi.pfe.bookexchangebackend.dao.enums.BookStatus;
 import soul.smi.pfe.bookexchangebackend.dao.enums.BookType;
 
+import javax.persistence.*;
 import java.util.Collection;
 import java.util.Date;
 
@@ -32,7 +32,7 @@ public class Book {
     private Integer editionNumber;
     private Date addingDate;
     @ManyToOne
-    private RegisteredUser owner ;
+    private UserEntity owner ;
     @OneToMany(mappedBy = "commentBook")
     private Collection<Comment> comments;
     @OneToOne

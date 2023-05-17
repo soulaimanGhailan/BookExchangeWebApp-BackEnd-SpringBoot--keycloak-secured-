@@ -1,37 +1,38 @@
 package soul.smi.pfe.bookexchangebackend.service;
 
-import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import soul.smi.pfe.bookexchangebackend.dao.entities.Book;
 import soul.smi.pfe.bookexchangebackend.dao.entities.Comment;
-import soul.smi.pfe.bookexchangebackend.dao.entities.RegisteredUser;
+import soul.smi.pfe.bookexchangebackend.dao.entities.UserEntity;
 import soul.smi.pfe.bookexchangebackend.dao.enums.CommentType;
 import soul.smi.pfe.bookexchangebackend.dao.reposotories.BookRepo;
 import soul.smi.pfe.bookexchangebackend.dao.reposotories.CommentRepo;
-import soul.smi.pfe.bookexchangebackend.dao.reposotories.RegisteredUserRepo;
+import soul.smi.pfe.bookexchangebackend.dao.reposotories.UserEntityRepo;
 import soul.smi.pfe.bookexchangebackend.dtos.CommentDTO;
 import soul.smi.pfe.bookexchangebackend.dtos.PageInfo;
 import soul.smi.pfe.bookexchangebackend.exeptions.UserNotFoundExeption;
 import soul.smi.pfe.bookexchangebackend.exeptions.bookNotFoundExeption;
 import soul.smi.pfe.bookexchangebackend.exeptions.commentNotFoundExeption;
-import soul.smi.pfe.bookexchangebackend.mappers.mapping;
+import soul.smi.pfe.bookexchangebackend.mappers.Mapper;
 
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-@Transactional @AllArgsConstructor
+@Transactional
+@AllArgsConstructor
 @Data
 public class CommentServiceImpl implements CommentService {
     private BookRepo bookRepo;
-    private RegisteredUserRepo registeredUserRepo;
-    private mapping mapper;
+    private Mapper mapper;
     private CommentRepo commentRepo;
+    private UserEntityRepo userRepo  ;
 
     @Override
     public List<CommentDTO> getCommentOfBook(Long bookId) {
@@ -65,7 +66,7 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public CommentDTO comment(String userId, Long bookId, String commentContent) throws UserNotFoundExeption, bookNotFoundExeption {
         Comment comment = new Comment();
-        RegisteredUser user = registeredUserRepo.findById(userId).orElseThrow(() ->new UserNotFoundExeption("userNotfound"));
+        UserEntity user = userRepo.findById(userId).orElseThrow(() ->new UserNotFoundExeption("userNotfound"));
         comment.setOwner( user);
         Book book = bookRepo.findById(bookId).orElseThrow(() -> new bookNotFoundExeption("book not found exeption"));
         comment.setCommentBook(book);
@@ -80,7 +81,7 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public CommentDTO reply(String userId, Long commentId, String replyContent) throws UserNotFoundExeption {
         Comment comment = new Comment();
-        RegisteredUser user = registeredUserRepo.findById(userId).orElseThrow(() ->new UserNotFoundExeption("userNotfound"));
+        UserEntity user = userRepo.findById(userId).orElseThrow(() ->new UserNotFoundExeption("userNotfound"));
         comment.setOwner( user);
         Comment commentOrigin = commentRepo.findCommentByCommentId(commentId);
         comment.setOriginalComment(commentOrigin);

@@ -1,36 +1,35 @@
 package soul.smi.pfe.bookexchangebackend.service;
 
-import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import soul.smi.pfe.bookexchangebackend.dao.entities.*;
 import soul.smi.pfe.bookexchangebackend.dao.enums.BookCategory;
 import soul.smi.pfe.bookexchangebackend.dao.enums.BookStatus;
 import soul.smi.pfe.bookexchangebackend.dao.reposotories.BookRepo;
-import soul.smi.pfe.bookexchangebackend.dao.reposotories.CommentRepo;
 import soul.smi.pfe.bookexchangebackend.dao.reposotories.PictureRepo;
-import soul.smi.pfe.bookexchangebackend.dao.reposotories.RegisteredUserRepo;
+import soul.smi.pfe.bookexchangebackend.dao.reposotories.UserEntityRepo;
 import soul.smi.pfe.bookexchangebackend.dtos.BookDTO;
-import soul.smi.pfe.bookexchangebackend.dtos.CommentDTO;
 import soul.smi.pfe.bookexchangebackend.dtos.PageInfo;
-import soul.smi.pfe.bookexchangebackend.dtos.RegisteredUserDTO;
+import soul.smi.pfe.bookexchangebackend.dtos.UserEntityDTO;
 import soul.smi.pfe.bookexchangebackend.exeptions.UserNotFoundExeption;
 import soul.smi.pfe.bookexchangebackend.exeptions.bookNotFoundExeption;
-import soul.smi.pfe.bookexchangebackend.mappers.mapping;
+import soul.smi.pfe.bookexchangebackend.mappers.Mapper;
 
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-@Transactional @AllArgsConstructor
+@Transactional
+@AllArgsConstructor
 public class BookServiceImpl implements BookService {
     private CommentService commentService;
-    private RegisteredUserRepo registeredUserRepo;
+    private UserEntityRepo userRepo;
     private BookRepo bookRepo;
-    private mapping mapper;
+    private Mapper mapper;
     private PictureRepo pictureRepo;
     @Override
     public BookDTO findBook(Long bookId) throws bookNotFoundExeption {
@@ -81,7 +80,7 @@ public class BookServiceImpl implements BookService {
         Book book=new Book();
         book = mapper.fromBookDTO(bookDTO);
         book.setAddingDate(new Date());
-        RegisteredUser user = registeredUserRepo.findById(userId).orElseThrow(() -> new UserNotFoundExeption("user not found"));
+        UserEntity user = userRepo.findById(userId).orElseThrow(() -> new UserNotFoundExeption("user not found"));
         book.setOwner(user);
         Picture picture=new Picture();
         picture.setAddingDate(new Date());
@@ -142,13 +141,9 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public RegisteredUserDTO getOwnerOfBook(Long bookId) throws bookNotFoundExeption {
-        RegisteredUser owner  = bookRepo.findById(bookId).orElseThrow(() -> new bookNotFoundExeption("book not found")).getOwner();
-        if(owner instanceof AdminUser){
-            return mapper.fromAdminUser((AdminUser) owner);
-        }else{
-            return mapper.fromRegularUser((RegularUser) owner);
-        }
+    public UserEntityDTO getOwnerOfBook(Long bookId) throws bookNotFoundExeption {
+        UserEntity owner  = bookRepo.findById(bookId).orElseThrow(() -> new bookNotFoundExeption("book not found")).getOwner();
+       return mapper.fromUserEntity(owner);
     }
 
 

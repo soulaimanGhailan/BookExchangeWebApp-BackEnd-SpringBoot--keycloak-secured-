@@ -6,7 +6,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import soul.smi.pfe.bookexchangebackend.dtos.CommentDTO;
 import soul.smi.pfe.bookexchangebackend.dtos.PageInfo;
-import soul.smi.pfe.bookexchangebackend.dtos.RegisteredUserDTO;
 import soul.smi.pfe.bookexchangebackend.exeptions.UserNotFoundExeption;
 import soul.smi.pfe.bookexchangebackend.exeptions.bookNotFoundExeption;
 import soul.smi.pfe.bookexchangebackend.service.CommentService;

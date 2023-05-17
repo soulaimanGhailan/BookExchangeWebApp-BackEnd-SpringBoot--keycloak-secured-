@@ -1,6 +1,6 @@
 package soul.smi.pfe.bookexchangebackend.dao.entities;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,7 +17,7 @@ public class Message {
     private MessageStatus status;
     @ManyToOne
     @NonNull
-    private RegisteredUser sender;
+    private UserEntity sender;
     @ManyToOne@NonNull
-    private RegisteredUser reciever;
+    private UserEntity reciever;
 }
