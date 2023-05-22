@@ -15,6 +15,7 @@ public class BookDTO {
     private String ISBN;
     private String bookTitle;
     private String author;
+    private String imageContentBase64;
     private BookStatus bookStatus;
     private BookType bookType;
     private BookCategory bookCategory;
@@ -23,6 +24,6 @@ public class BookDTO {
     private Integer editionNumber;
 //    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private UserEntityDTO owner ;
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private Collection<CommentDTO> comments;
+//    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+//    private Collection<CommentDTO> comments;
 }

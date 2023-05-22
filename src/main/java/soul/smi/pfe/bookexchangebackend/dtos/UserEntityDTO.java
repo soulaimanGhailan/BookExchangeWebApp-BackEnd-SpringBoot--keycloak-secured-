@@ -10,4 +10,5 @@ public class UserEntityDTO {
     private String username ;
     private String lastname;
     private String phoneNumber;
+    private String imageContentBase64 ;
 }

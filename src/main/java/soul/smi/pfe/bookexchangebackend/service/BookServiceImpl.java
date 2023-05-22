@@ -1,6 +1,7 @@
 package soul.smi.pfe.bookexchangebackend.service;
 
 import lombok.AllArgsConstructor;
+import org.apache.commons.codec.binary.Base64;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -15,7 +16,7 @@ import soul.smi.pfe.bookexchangebackend.dtos.BookDTO;
 import soul.smi.pfe.bookexchangebackend.dtos.PageInfo;
 import soul.smi.pfe.bookexchangebackend.dtos.UserEntityDTO;
 import soul.smi.pfe.bookexchangebackend.exeptions.UserNotFoundExeption;
-import soul.smi.pfe.bookexchangebackend.exeptions.bookNotFoundExeption;
+import soul.smi.pfe.bookexchangebackend.exeptions.BookNotFoundExeption;
 import soul.smi.pfe.bookexchangebackend.mappers.Mapper;
 
 import java.util.Date;
@@ -32,8 +33,8 @@ public class BookServiceImpl implements BookService {
     private Mapper mapper;
     private PictureRepo pictureRepo;
     @Override
-    public BookDTO findBook(Long bookId) throws bookNotFoundExeption {
-        Book book = bookRepo.findById(bookId).orElseThrow(() -> new bookNotFoundExeption("book not found"));
+    public BookDTO findBook(Long bookId) throws BookNotFoundExeption {
+        Book book = bookRepo.findById(bookId).orElseThrow(() -> new BookNotFoundExeption("book not found"));
         return mapper.fromBook(book);
     }
     @Override
@@ -76,41 +77,41 @@ public class BookServiceImpl implements BookService {
 
 
     @Override
-    public void addBookToUser(String userId, BookDTO bookDTO, byte[] imageContent) throws  UserNotFoundExeption {
-        Book book=new Book();
-        book = mapper.fromBookDTO(bookDTO);
+    public BookDTO addBookToUser(String userId, BookDTO bookDTO) throws  UserNotFoundExeption {
+        Book book = mapper.fromBookDTO(bookDTO);
         book.setAddingDate(new Date());
         UserEntity user = userRepo.findById(userId).orElseThrow(() -> new UserNotFoundExeption("user not found"));
         book.setOwner(user);
-        Picture picture=new Picture();
-        picture.setAddingDate(new Date());
-        picture.setPictureContent(imageContent);
-        picture.setPictureName(book.getBookTitle());
-        Picture savedPic = pictureRepo.save(picture);
-        book.setBookPicture(savedPic);
-        bookRepo.save(book);
+        Book saved = bookRepo.save(book);
+        return mapper.fromBook(saved);
     }
 
+
     @Override
-    public void deleteBook(Long bookId) {
+    public BookDTO deleteBook(Long bookId) throws BookNotFoundExeption {
         // we have to remove comment of this book before deleting it cause the comments has a forign key to book
+        Book book = bookRepo.findById(bookId).orElseThrow(() -> new BookNotFoundExeption("book not found"));
         commentService.deleteAllCommentOfBook(bookId);
         bookRepo.deleteById(bookId);
+        /** in regular case this is going to work
+         * but in test case (there is only 7images shared between books) it is not going to work  **/
+        // we will fix this by creating an image for evry book
+        pictureRepo.deleteById(book.getBookPicture().getId());
+        return mapper.fromBook(book);
     }
 
     @Override
     public void deleteAllBooksOfUser(String userId) {
         getAllBooksOfUser(userId).stream().forEach(bookDTO -> {
-            deleteBook(bookDTO.getBookId());
+            try {
+                deleteBook(bookDTO.getBookId());
+            } catch (BookNotFoundExeption e) {
+                throw new RuntimeException(e);
+            }
         });
     }
 
 
-    @Override
-    public byte[] getImageOfBook(Long bookId) throws bookNotFoundExeption {
-        Book book = bookRepo.findById(bookId).orElseThrow(() -> new bookNotFoundExeption("book not found"));
-        return book.getBookPicture().getPictureContent();
-    }
 
     @Override
     public List<BookDTO> getAllBooksOfUserPage(String userId, int page, int size) {
@@ -141,8 +142,8 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public UserEntityDTO getOwnerOfBook(Long bookId) throws bookNotFoundExeption {
-        UserEntity owner  = bookRepo.findById(bookId).orElseThrow(() -> new bookNotFoundExeption("book not found")).getOwner();
+    public UserEntityDTO getOwnerOfBook(Long bookId) throws BookNotFoundExeption {
+        UserEntity owner  = bookRepo.findById(bookId).orElseThrow(() -> new BookNotFoundExeption("book not found")).getOwner();
        return mapper.fromUserEntity(owner);
     }
 
@@ -190,6 +191,18 @@ public class BookServiceImpl implements BookService {
         pageInfo.setTotalElements(page.getTotalElements());
         return pageInfo;
     }
+
+    @Override
+    public BookDTO updateBook(BookDTO book) throws BookNotFoundExeption {
+        Book book1 = bookRepo.findById(book.getBookId()).orElseThrow(() -> new BookNotFoundExeption("book not found"));
+        Long oldPicId = book1.getBookPicture().getId();
+        book1=mapper.fromBookDTO(book);
+        Book saved = bookRepo.save(book1);
+        pictureRepo.deleteById(oldPicId);
+        return mapper.fromBook(saved);
+    }
+
+
 
 
 }

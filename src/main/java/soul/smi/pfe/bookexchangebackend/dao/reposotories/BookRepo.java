@@ -5,6 +5,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import soul.smi.pfe.bookexchangebackend.dao.entities.Book;
+import soul.smi.pfe.bookexchangebackend.dao.entities.Picture;
 import soul.smi.pfe.bookexchangebackend.dao.enums.BookCategory;
 
 import java.util.List;

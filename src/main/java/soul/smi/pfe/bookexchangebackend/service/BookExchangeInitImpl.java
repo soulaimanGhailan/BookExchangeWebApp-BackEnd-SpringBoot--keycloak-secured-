@@ -6,7 +6,7 @@ import soul.smi.pfe.bookexchangebackend.dao.enums.BookCategory;
 import soul.smi.pfe.bookexchangebackend.dao.reposotories.*;
 import soul.smi.pfe.bookexchangebackend.dtos.CommentDTO;
 import soul.smi.pfe.bookexchangebackend.exeptions.UserNotFoundExeption;
-import soul.smi.pfe.bookexchangebackend.exeptions.bookNotFoundExeption;
+import soul.smi.pfe.bookexchangebackend.exeptions.BookNotFoundExeption;
 import soul.smi.pfe.bookexchangebackend.mappers.Mapper;
 import java.io.File;
 import java.io.IOException;
@@ -16,7 +16,6 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 
 @Service
 @Transactional
@@ -40,8 +39,6 @@ public class BookExchangeInitImpl implements BookExchangeInit {
 
     private List<UserEntity> users=new ArrayList<>();
     private List<Book> intialBooks = new ArrayList<>();
-    private List<Picture> userImages = new ArrayList<>();
-    private List<Picture> bookImages=new ArrayList<>();
     public BookExchangeInitImpl(Mapper mapper, UserService userService,
                                 BookService bookService, CommentService commentService,
                                 UserAddressRepo userAddressRepo, BookRepo bookRepo,
@@ -62,7 +59,7 @@ public class BookExchangeInitImpl implements BookExchangeInit {
             user.setBirthday(new Date());
             user.setPhoneNumber(generatePhoneNum());
             user.setAddress(generatedAddress());
-            user.setProfilePic(userImages.get((int)(Math.random()*5)));
+            user.setProfilePic(createUserImage(user.getFirstname()));
             UserEntity save = userRepo.save(user);
             users.add(save);
         });
@@ -95,7 +92,7 @@ public class BookExchangeInitImpl implements BookExchangeInit {
                         "book description book description  ****" + book.getBookTitle());
                 book.setOwner(regularUser);
                 book.setAuthor("the author");
-                book.setBookPicture(bookImages.get((int)(Math.random()*5)));
+                book.setBookPicture(createBookImage(book.getBookTitle()));
                 Book save = bookRepo.save(book);
                 intialBooks.add(save);
             }
@@ -103,7 +100,7 @@ public class BookExchangeInitImpl implements BookExchangeInit {
     }
 
     @Override
-    public void initComment() {
+    public void initComments() {
         users.stream().forEach(user -> {
             intialBooks.stream().forEach(book -> {
                 try {
@@ -113,52 +110,35 @@ public class BookExchangeInitImpl implements BookExchangeInit {
                             commentService.reply(user.getUserId() , comment.getCommentId() , generateComment() );
                         }
                     }
-                } catch (UserNotFoundExeption | bookNotFoundExeption e) {
+                } catch (UserNotFoundExeption | BookNotFoundExeption e) {
                     e.printStackTrace();
                 }
             });
         });
     }
 
+
+
     @Override
-    public void initUserImages() {
-        for (int i = 0; i < 5; i++) {
-//            File file=new File(System.getProperty("user.home")+"/book/profile/"+((int)(Math.random()*2)+1)+".jpg");
-            File file=new File("initImages/book/profile/"+((int)(Math.random()*2)+1)+".jpg");
-            Path path= Paths.get(file.toURI());
-            try {
-                byte[] picContent = Files.readAllBytes(path);
-                Picture picture1 = new Picture();
-                picture1.setPictureContent(picContent);
-                picture1.setAddingDate(new Date());
-                picture1.setPictureName("pic num" +i);
-                Picture savedPic1 = pictureRepo.save(picture1);
-                userImages.add(savedPic1);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+    public Picture createBookImage(String name) {
+        try {
+            return createImage("initImages/book/bookImages/" , name , 3);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 
     @Override
-    public void initBookImages () {
-        for (int i = 0; i < 5; i++) {
-//            File file=new File(System.getProperty("user.home")+"/book/bookImages/"+((int)(Math.random()*3)+1)+".jpg");
-            File file=new File("initImages/book/bookImages/"+((int)(Math.random()*3)+1)+".jpg");
-            Path path= Paths.get(file.toURI());
-            try {
-                byte[] picContent = Files.readAllBytes(path);
-                Picture picture1 = new Picture();
-                picture1.setPictureContent(picContent);
-                picture1.setAddingDate(new Date());
-                picture1.setPictureName("book num" + i);
-                Picture savedPic1 = pictureRepo.save(picture1);
-                bookImages.add(savedPic1);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+    public Picture createUserImage(String name) {
+        try {
+            return createImage("initImages/book/profile/" , name , 2);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
+
+
+
 
     private String generateComment() {
         return (comments.get((int)(Math.random()*comments.size())));
@@ -180,5 +160,16 @@ public class BookExchangeInitImpl implements BookExchangeInit {
 
     private String generatePass() {
         return ""+(int)(1000+Math.random()*9999);
+    }
+
+    private Picture createImage(String pathName , String name , int numberImages)throws IOException{
+        File file=new File(pathName+((int)(Math.random()*numberImages)+1)+".jpg");
+        Path path= Paths.get(file.toURI());
+        byte[] picContent = Files.readAllBytes(path);
+        Picture picture1 = new Picture();
+        picture1.setPictureContent(picContent);
+        picture1.setAddingDate(new Date());
+        picture1.setPictureName(name);
+        return pictureRepo.save(picture1);
     }
 }

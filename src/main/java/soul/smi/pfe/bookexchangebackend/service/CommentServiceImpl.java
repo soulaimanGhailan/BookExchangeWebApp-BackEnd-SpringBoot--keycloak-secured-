@@ -16,7 +16,7 @@ import soul.smi.pfe.bookexchangebackend.dao.reposotories.UserEntityRepo;
 import soul.smi.pfe.bookexchangebackend.dtos.CommentDTO;
 import soul.smi.pfe.bookexchangebackend.dtos.PageInfo;
 import soul.smi.pfe.bookexchangebackend.exeptions.UserNotFoundExeption;
-import soul.smi.pfe.bookexchangebackend.exeptions.bookNotFoundExeption;
+import soul.smi.pfe.bookexchangebackend.exeptions.BookNotFoundExeption;
 import soul.smi.pfe.bookexchangebackend.exeptions.commentNotFoundExeption;
 import soul.smi.pfe.bookexchangebackend.mappers.Mapper;
 
@@ -64,11 +64,11 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public CommentDTO comment(String userId, Long bookId, String commentContent) throws UserNotFoundExeption, bookNotFoundExeption {
+    public CommentDTO comment(String userId, Long bookId, String commentContent) throws UserNotFoundExeption, BookNotFoundExeption {
         Comment comment = new Comment();
         UserEntity user = userRepo.findById(userId).orElseThrow(() ->new UserNotFoundExeption("userNotfound"));
         comment.setOwner( user);
-        Book book = bookRepo.findById(bookId).orElseThrow(() -> new bookNotFoundExeption("book not found exeption"));
+        Book book = bookRepo.findById(bookId).orElseThrow(() -> new BookNotFoundExeption("book not found exeption"));
         comment.setCommentBook(book);
         comment.setCommentDate(new Date());
         comment.setOriginalComment(null);

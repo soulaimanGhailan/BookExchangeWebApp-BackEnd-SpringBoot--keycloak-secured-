@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import soul.smi.pfe.bookexchangebackend.dtos.CommentDTO;
 import soul.smi.pfe.bookexchangebackend.dtos.PageInfo;
 import soul.smi.pfe.bookexchangebackend.exeptions.UserNotFoundExeption;
-import soul.smi.pfe.bookexchangebackend.exeptions.bookNotFoundExeption;
+import soul.smi.pfe.bookexchangebackend.exeptions.BookNotFoundExeption;
 import soul.smi.pfe.bookexchangebackend.service.CommentService;
 
 import java.util.Collection;
@@ -72,7 +72,7 @@ public class CommentRestController {
         try {
             CommentDTO comment = commentService.comment(userId, bookId, commentDTO.getCommentContent());
             return new  ResponseEntity(comment , HttpStatus.OK);
-        } catch (UserNotFoundExeption | bookNotFoundExeption e) {
+        } catch (UserNotFoundExeption | BookNotFoundExeption e) {
             return new ResponseEntity<>(null , HttpStatus.valueOf("exception : user not found or BookNotFound"));
         }
     }

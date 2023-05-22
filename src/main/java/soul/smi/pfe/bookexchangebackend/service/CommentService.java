@@ -3,7 +3,7 @@ package soul.smi.pfe.bookexchangebackend.service;
 import soul.smi.pfe.bookexchangebackend.dtos.CommentDTO;
 import soul.smi.pfe.bookexchangebackend.dtos.PageInfo;
 import soul.smi.pfe.bookexchangebackend.exeptions.UserNotFoundExeption;
-import soul.smi.pfe.bookexchangebackend.exeptions.bookNotFoundExeption;
+import soul.smi.pfe.bookexchangebackend.exeptions.BookNotFoundExeption;
 import soul.smi.pfe.bookexchangebackend.exeptions.commentNotFoundExeption;
 
 import java.util.List;
@@ -14,7 +14,7 @@ public interface CommentService {
     List<CommentDTO> getCommentOfBook(Long bookId);
     CommentDTO findComment(Long commentId) throws commentNotFoundExeption;
     List<CommentDTO> getCommentsOfUser(String userId) throws UserNotFoundExeption ;
-    CommentDTO comment(String userId, Long bookId, String commentContent) throws UserNotFoundExeption, bookNotFoundExeption;
+    CommentDTO comment(String userId, Long bookId, String commentContent) throws UserNotFoundExeption, BookNotFoundExeption;
     CommentDTO reply(String userId , Long commentId , String replyContent) throws UserNotFoundExeption;
     List<CommentDTO> getRepliesOfComment(Long commentId , int page , int size);
     void deleteComment(Long commentId);
