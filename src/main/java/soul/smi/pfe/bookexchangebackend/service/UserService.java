@@ -1,6 +1,7 @@
 package soul.smi.pfe.bookexchangebackend.service;
 
 import soul.smi.pfe.bookexchangebackend.dtos.AddressDTO;
+import soul.smi.pfe.bookexchangebackend.dtos.UpdateFieldOfUser;
 import soul.smi.pfe.bookexchangebackend.dtos.UserEntityDTO;
 import soul.smi.pfe.bookexchangebackend.exeptions.UserNotFoundExeption;
 
@@ -12,4 +13,5 @@ public interface UserService {
     byte[] getUserProfilePic(String id) throws UserNotFoundExeption;
     AddressDTO getAddress(String id) throws UserNotFoundExeption;
     void syncUsers();
+    UserEntityDTO updateUser(UpdateFieldOfUser fieldOfUser) throws UserNotFoundExeption;
 }

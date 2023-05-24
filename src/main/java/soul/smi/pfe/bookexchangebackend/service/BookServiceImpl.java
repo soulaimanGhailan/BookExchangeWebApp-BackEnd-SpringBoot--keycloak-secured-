@@ -1,7 +1,6 @@
 package soul.smi.pfe.bookexchangebackend.service;
 
 import lombok.AllArgsConstructor;
-import org.apache.commons.codec.binary.Base64;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -32,6 +31,7 @@ public class BookServiceImpl implements BookService {
     private BookRepo bookRepo;
     private Mapper mapper;
     private PictureRepo pictureRepo;
+    private PicturesService picturesService ;
     @Override
     public BookDTO findBook(Long bookId) throws BookNotFoundExeption {
         Book book = bookRepo.findById(bookId).orElseThrow(() -> new BookNotFoundExeption("book not found"));
@@ -82,6 +82,7 @@ public class BookServiceImpl implements BookService {
         book.setAddingDate(new Date());
         UserEntity user = userRepo.findById(userId).orElseThrow(() -> new UserNotFoundExeption("user not found"));
         book.setOwner(user);
+        book.setBookPicture(picturesService.createPicFromBase64(book.getBookTitle() , bookDTO.getImageContentBase64()));
         Book saved = bookRepo.save(book);
         return mapper.fromBook(saved);
     }
@@ -193,16 +194,17 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public BookDTO updateBook(BookDTO book) throws BookNotFoundExeption {
-        Book book1 = bookRepo.findById(book.getBookId()).orElseThrow(() -> new BookNotFoundExeption("book not found"));
-        Long oldPicId = book1.getBookPicture().getId();
-        book1=mapper.fromBookDTO(book);
-        Book saved = bookRepo.save(book1);
+    public BookDTO updateBook(BookDTO bookDTO) throws BookNotFoundExeption {
+        Book book = bookRepo.findById(bookDTO.getBookId()).orElseThrow(() -> new BookNotFoundExeption("book not found"));
+        Long oldPicId = book.getBookPicture().getId();
+        book.setBookTitle(bookDTO.getBookTitle());
+        book.setBookCategory(bookDTO.getBookCategory());
+        book.setDescription(bookDTO.getDescription());
+        book.setBookStatus(bookDTO.getBookStatus());
+        book.setBookPicture(picturesService.createPicFromBase64(book.getBookTitle() , bookDTO.getImageContentBase64()));
+        Book saved = bookRepo.save(book);
         pictureRepo.deleteById(oldPicId);
         return mapper.fromBook(saved);
     }
-
-
-
 
 }

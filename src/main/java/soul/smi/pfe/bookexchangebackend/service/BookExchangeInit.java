@@ -7,5 +7,4 @@ public interface BookExchangeInit {
     void initBooks();
     void initComments();
     Picture createBookImage(String name);
-    Picture createUserImage(String name);
 }

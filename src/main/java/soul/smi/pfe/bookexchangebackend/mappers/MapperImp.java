@@ -11,12 +11,6 @@ import soul.smi.pfe.bookexchangebackend.dtos.*;
 @Service
 public class MapperImp implements Mapper {
 
-    private PictureRepo pictureRepo;
-
-    public MapperImp(PictureRepo pictureRepo) {
-        this.pictureRepo = pictureRepo;
-    }
-
     @Override
     public UserEntityDTO fromUserEntity(UserEntity user) {
         UserEntityDTO userDto=new UserEntityDTO();
@@ -30,7 +24,6 @@ public class MapperImp implements Mapper {
     @Override
     public UserEntity fromUserEntityDTO(UserEntityDTO userDto) {
         UserEntity user=new UserEntity();
-        user.setProfilePic(createPic(userDto.getUsername() , userDto.getImageContentBase64()));
         BeanUtils.copyProperties(userDto , user);
         return user;
     }
@@ -50,8 +43,6 @@ public class MapperImp implements Mapper {
     @Override
     public Book fromBookDTO(BookDTO bookDTO) {
         Book book =  new Book();
-        book.setBookPicture(createPic(bookDTO.getBookTitle() , bookDTO.getImageContentBase64()));
-        book.setOwner(fromUserEntityDTO(bookDTO.getOwner()));
         BeanUtils.copyProperties(bookDTO , book);
         return book;
     }
@@ -95,21 +86,5 @@ public class MapperImp implements Mapper {
         BeanUtils.copyProperties(address,addressDTO);
         return addressDTO;
     }
-    private Picture createPic(String name , String imageBase64)
-    {
-        Picture picture=new Picture();
-        picture.setAddingDate(new Date());
-        String base64Data = imageBase64;
-        if(imageBase64.startsWith("data:image/jpeg;base64,")) {
-             base64Data = imageBase64.substring(imageBase64.indexOf(",") + 1);
-        }
-        byte[] picContent = Base64.decodeBase64(base64Data);
-        picture.setPictureContent(picContent);
-        picture.setPictureName(name);
-        Picture savedPic = pictureRepo.save(picture);
-        return savedPic;
-
-    }
-
 
 }

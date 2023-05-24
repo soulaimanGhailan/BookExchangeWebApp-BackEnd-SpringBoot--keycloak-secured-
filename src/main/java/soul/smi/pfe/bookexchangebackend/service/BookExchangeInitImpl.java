@@ -58,8 +58,7 @@ public class BookExchangeInitImpl implements BookExchangeInit {
         userRepo.findAll().forEach(user -> {
             user.setBirthday(new Date());
             user.setPhoneNumber(generatePhoneNum());
-            user.setAddress(generatedAddress());
-            user.setProfilePic(createUserImage(user.getFirstname()));
+            user.setAddress(generatedAddress(user.getAddress().getId()));
             UserEntity save = userRepo.save(user);
             users.add(save);
         });
@@ -128,14 +127,6 @@ public class BookExchangeInitImpl implements BookExchangeInit {
         }
     }
 
-    @Override
-    public Picture createUserImage(String name) {
-        try {
-            return createImage("initImages/book/profile/" , name , 2);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
 
 
 
@@ -144,8 +135,8 @@ public class BookExchangeInitImpl implements BookExchangeInit {
         return (comments.get((int)(Math.random()*comments.size())));
     }
 
-    private UserAddress generatedAddress() {
-        UserAddress address=new UserAddress();
+    private UserAddress generatedAddress(Long id) {
+        UserAddress address = userAddressRepo.findById(id).orElse(null);
         address.setCountry("Morocco");
         address.setCity(cities.get((int)(Math.random()*cities.size())));
         address.setHomeAddress("1111 lot al xxxxxxxxxxxxx "+ address.getCity());
