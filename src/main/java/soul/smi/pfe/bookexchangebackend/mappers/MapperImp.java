@@ -4,7 +4,6 @@ import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import soul.smi.pfe.bookexchangebackend.dao.entities.*;
-import soul.smi.pfe.bookexchangebackend.dao.reposotories.PictureRepo;
 import soul.smi.pfe.bookexchangebackend.dtos.*;
 
 

@@ -1,5 +1,4 @@
 package soul.smi.pfe.bookexchangebackend.service;
-
 import org.apache.commons.codec.binary.Base64;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

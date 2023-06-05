@@ -37,7 +37,6 @@ public class UserServiceImpl implements UserService {
     private UserEntityRepo userRepo ;
     private PictureRepo pictureRepo;
     private PicturesService picturesService;
-
     private final String ADMIN_PASSWORD = "admin";
     private final String ADMIN_USERNAME = "admin";
     private final String KEYCLOAK_URL = "http://localhost:8080/";

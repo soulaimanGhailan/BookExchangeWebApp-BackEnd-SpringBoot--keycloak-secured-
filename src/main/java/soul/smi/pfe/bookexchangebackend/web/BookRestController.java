@@ -1,8 +1,6 @@
 package soul.smi.pfe.bookexchangebackend.web;
 import lombok.AllArgsConstructor;
-import org.apache.commons.codec.binary.Base64;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import soul.smi.pfe.bookexchangebackend.dtos.BookDTO;
