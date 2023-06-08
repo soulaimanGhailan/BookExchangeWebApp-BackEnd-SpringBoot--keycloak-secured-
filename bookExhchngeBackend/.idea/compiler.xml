@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="ChatCom-service" />
+        <module name="eureka-discovry-service" />
+        <module name="user-service" />
+        <module name="book-service" />
+        <module name="images-service" />
+        <module name="gateway-service" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="bill-service" target="11" />
+      <module name="book-service" target="11" />
+      <module name="ChatCom-service" target="11" />
+      <module name="commet-service" target="11" />
+      <module name="customer-service" target="11" />
+      <module name="eureka-discovry-service" target="11" />
+      <module name="gateway-service" target="11" />
+      <module name="getway-service" target="11" />
+      <module name="images-service" target="11" />
+      <module name="user-service" target="11" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="ChatCom-service" options="-parameters" />
+      <module name="bill-service" options="-parameters" />
+      <module name="book-service" options="-parameters" />
+      <module name="commet-service" options="-parameters" />
+      <module name="customer-service" options="-parameters" />
+      <module name="eureka-discovry-service" options="-parameters" />
+      <module name="gateway-service" options="-parameters" />
+      <module name="getway-service" options="-parameters" />
+      <module name="images-service" options="-parameters" />
+      <module name="user-service" options="-parameters" />
+    </option>
+  </component>
+</project>

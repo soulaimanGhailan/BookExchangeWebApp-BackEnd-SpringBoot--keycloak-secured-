@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/../ChatCom-service/ChatCom-service.iml" filepath="$PROJECT_DIR$/../ChatCom-service/ChatCom-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../book-service/book-service.iml" filepath="$PROJECT_DIR$/../book-service/book-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/bookExhchngeBackend.iml" filepath="$PROJECT_DIR$/bookExhchngeBackend.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../eureka-discovry-service/eureka-discovry-service.iml" filepath="$PROJECT_DIR$/../eureka-discovry-service/eureka-discovry-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../gateway-service/gateway-service.iml" filepath="$PROJECT_DIR$/../gateway-service/gateway-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../images-service/images-service.iml" filepath="$PROJECT_DIR$/../images-service/images-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../user-service/user-service.iml" filepath="$PROJECT_DIR$/../user-service/user-service.iml" />
+    </modules>
+  </component>
+</project>

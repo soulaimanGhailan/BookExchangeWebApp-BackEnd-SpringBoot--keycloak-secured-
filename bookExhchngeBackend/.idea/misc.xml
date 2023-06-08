@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="MavenProjectsManager">
+    <option name="originalFiles">
+      <list>
+        <option value="$PROJECT_DIR$/../book-service/pom.xml" />
+        <option value="$PROJECT_DIR$/../eureka-discovry-service/pom.xml" />
+        <option value="$PROJECT_DIR$/../user-service/pom.xml" />
+        <option value="$PROJECT_DIR$/../gateway-service/pom.xml" />
+        <option value="$PROJECT_DIR$/../ChatCom-service/pom.xml" />
+        <option value="$PROJECT_DIR$/../images-service/pom.xml" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="10" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/out" />
+  </component>
+</project>
