@@ -111,6 +111,12 @@ public class UserServiceImpl implements UserService {
         return mapper.fromAddress(user.getAddress());
 
     }
+
+    @Override
+    public Long getNumberOfUsers() {
+        return userRepo.count() ;
+    }
+
     private String getToken(){
         KeycloakSecurityContext context = (KeycloakSecurityContext) SecurityContextHolder.getContext().getAuthentication().getCredentials();
         String token ="bearer "+ context.getTokenString();

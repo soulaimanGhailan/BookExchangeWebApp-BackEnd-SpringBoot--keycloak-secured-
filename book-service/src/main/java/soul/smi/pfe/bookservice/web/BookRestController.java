@@ -22,6 +22,10 @@ import java.util.List;
 public class BookRestController {
     private BookService bookService;
     //totalPage and totalBooks
+    @GetMapping("totalNumber")
+    public Long getNumberOfBooks(){
+        return bookService.getBooksNumber();
+    }
     @GetMapping("/pageInfo")
     public PageInfo getPageInfoAllBook(@RequestParam(name = "size" , defaultValue = "5")int size){
         return bookService.getPageInfo(size);

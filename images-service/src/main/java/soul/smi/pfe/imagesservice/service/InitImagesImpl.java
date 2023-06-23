@@ -15,8 +15,15 @@ public class InitImagesImpl implements InitImages {
     @Override
     public void initImages() {
         picturesService.createDefaultPic("defaultProfilePicture");
-        for (int i = 0; i < 8*3; i++) {
-            picturesService.createBookImage("book "+ i);
+        for (int i = 0; i < 8; i++) {
+            picturesService.createBookImage("book "+ i ,1 );
         }
+        for (int i = 0; i < 8; i++) {
+            picturesService.createBookImage("book "+ i ,2 );
+        }
+        for (int i = 0; i < 8; i++) {
+            picturesService.createBookImage("book "+ i ,3 );
+        }
+
     }
 }

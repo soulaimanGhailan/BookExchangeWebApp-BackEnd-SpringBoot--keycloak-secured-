@@ -23,6 +23,9 @@ public class GatewayServiceApplication {
 				.route(r->r.path("/users/**").uri("lb://USERS-SERVICE") )
 				.route(r->r.path("/pictures/**").uri("lb://IMAGES-SERVICE") )
 				.route(r->r.path("/comments/**").uri("lb://CHATCOM-SERVICE") )
+				.route(r->r.path("/notifications/**").uri("lb://CHATCOM-SERVICE") )
+				.route(r->r.path("/messages/**").uri("lb://CHATCOM-SERVICE") )
+				.route(r->r.path("/statistic/**").uri("lb://STATISTIC-SERVICE") )
 				.build();
 	}
 

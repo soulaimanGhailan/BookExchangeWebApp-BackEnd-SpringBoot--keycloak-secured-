@@ -9,8 +9,11 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import soul.smi.pfe.ChatComservice.dao.entities.Comment;
+import soul.smi.pfe.ChatComservice.dao.entities.Notification;
 import soul.smi.pfe.ChatComservice.dao.enums.CommentType;
+import soul.smi.pfe.ChatComservice.dao.enums.NotificationType;
 import soul.smi.pfe.ChatComservice.dao.reposotories.CommentRepo;
+import soul.smi.pfe.ChatComservice.dao.reposotories.NotificationRepo;
 import soul.smi.pfe.ChatComservice.dtos.CommentDTO;
 import soul.smi.pfe.ChatComservice.dtos.PageInfo;
 import soul.smi.pfe.ChatComservice.exeptions.BookNotFoundExeption;
@@ -25,6 +28,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static soul.smi.pfe.ChatComservice.dao.enums.ReceivingStatus.UNSEEN;
+import static soul.smi.pfe.ChatComservice.dao.enums.NotificationType.POST_COMMENT_NOTIFICATION;
+
 @Service
 @Transactional
 @AllArgsConstructor
@@ -32,6 +38,7 @@ import java.util.stream.Collectors;
 public class CommentServiceImpl implements CommentService {
     private Mapper mapper;
     private CommentRepo commentRepo;
+    private NotificationRepo notificationRepo;
     private BookRestClient bookRestClient ;
     private UsersRestClient usersRestClient;
 
@@ -79,6 +86,9 @@ public class CommentServiceImpl implements CommentService {
         comment.setOriginalComment(null);
         comment.setCommentType(CommentType.REGULAR_COMMENT);
         comment.setCommentContent(commentContent);
+        // create a notification comment
+        createNotification(book.getBookId() , book.getOwner().getUserId() , POST_COMMENT_NOTIFICATION);
+
         Comment savedComment = commentRepo.save(comment);
         return mapper.fromComment(savedComment);
     }
@@ -161,10 +171,22 @@ public class CommentServiceImpl implements CommentService {
         return getRepliesOfComment(commentId , 0 , 1).size() != 0;
     }
 
+    @Override
+    public Long GetNumberOfComments() {
+        return commentRepo.count();
+    }
+
     private String getToken(){
         KeycloakSecurityContext context = (KeycloakSecurityContext) SecurityContextHolder.getContext().getAuthentication().getCredentials();
         String token ="bearer "+ context.getTokenString();
         return token;
     }
-
+    private Notification createNotification(Long bookId , String receiverId , NotificationType type ){
+        Notification notification = Notification.builder()
+                .BookId(bookId)
+                .type(type)
+                .receiverId(receiverId)
+                .status(UNSEEN).build();
+        return notificationRepo.save(notification);
+    }
 }

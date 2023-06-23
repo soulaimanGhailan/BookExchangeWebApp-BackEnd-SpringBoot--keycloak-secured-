@@ -22,7 +22,7 @@ public class InitCommentsImpl implements InitComments {
     private CommentService commentService;
     private CommentRepo commentRepo;
     private Mapper mapper;
-    private List<String> defaultUsersIds = List.of("703a5c6e-14ad-4ab7-84ac-6bd5040cf8cb" , "11833e18-d9ed-4014-9f88-051bee380cfa" , "97dcbe66-db08-4682-89aa-61ddd356ce0a");
+    private List<String> defaultUsersIds = List.of("c92fb040-0719-4c15-a364-57e8e514d2c2" , "87d7a13c-d609-4557-8e95-df2a80870479" , "f6b6d8b9-b735-4eb3-b90b-6a8a76918823");
     private   List<String> comments = List.of("this is good", "i am intrested", "i want to exchange with you body",
             "i've read this one", "this book looks sridered");
 

@@ -27,4 +27,5 @@ public interface CommentService {
     PageInfo getPageInfo(Long bookId , int size);
     PageInfo getPageInfoOfReplies(Long commentId, int size);
     Boolean hasReplies(Long commentId);
+    Long GetNumberOfComments();
 }

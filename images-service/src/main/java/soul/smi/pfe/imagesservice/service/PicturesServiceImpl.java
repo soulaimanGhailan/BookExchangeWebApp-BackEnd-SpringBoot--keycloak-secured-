@@ -85,15 +85,15 @@ public class PicturesServiceImpl implements PicturesService {
         return picture;
     }
     @Override
-    public Picture createBookImage(String name) {
+    public Picture createBookImage(String name, int i) {
         try {
-            return createImage("C:\\formation\\java path\\jee\\PFe\\Nouveau dossier (2)\\microserives Imegration\\images-service\\initImages\\book\\bookImages" , name , 3);
+            return createImage("C:\\formation\\java path\\jee\\PFe\\Nouveau dossier (2)\\microserives Imegration\\images-service\\initImages\\book\\bookImages" , name , i);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
     private Picture createImage(String pathName , String name , int numberImages)throws IOException{
-        File file=new File(pathName+"\\"+((int)(Math.random()*numberImages)+1)+".jpg");
+        File file=new File(pathName+"\\"+numberImages+".jpg");
         Path path= Paths.get(file.toURI());
         byte[] picContent = Files.readAllBytes(path);
         Picture picture1 = new Picture();

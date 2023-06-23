@@ -24,6 +24,10 @@ public class CommentRestController {
 //    public PageInfo getPageInfoOfComments(@PathVariable int size){
 //        return commentService.
 //    }
+    @GetMapping("totalNumber")
+    public Long getCommentsNumber(){
+        return commentService.GetNumberOfComments();
+    }
     @GetMapping("{bookId}")
     public ResponseEntity<Collection<CommentDTO>> getComments(@PathVariable Long bookId,
                                                               @RequestParam(name = "page" , defaultValue = "0") int page,
@@ -69,18 +73,18 @@ public class CommentRestController {
     @PostMapping("{userId}/{bookId}")
     public ResponseEntity<CommentDTO> comment(@PathVariable String userId ,
                                   @PathVariable Long bookId ,
-                                  @RequestBody CommentDTO commentDTO){
+                                  @RequestBody String commentContent){
         try {
-            CommentDTO comment = commentService.comment(userId, bookId, commentDTO.getCommentContent());
+            CommentDTO comment = commentService.comment(userId, bookId, commentContent);
             return new  ResponseEntity(comment , HttpStatus.OK);
         } catch (UserNotFoundExeption | BookNotFoundExeption e) {
             return new ResponseEntity<>(null , HttpStatus.valueOf("exception : user not found or BookNotFound"));
         }
     }
     @PostMapping("{userId}/{commentId}/reply")
-    public ResponseEntity<CommentDTO> replyTsComment(@PathVariable String userId ,
-                                              @PathVariable Long commentId ,
-                                              @RequestBody CommentDTO commentDTO){
+    public ResponseEntity<CommentDTO> replyToComment(@PathVariable String userId ,
+                                                     @PathVariable Long commentId ,
+                                                     @RequestBody CommentDTO commentDTO){
         try {
             CommentDTO comment = commentService.reply(userId , commentId , commentDTO.getCommentContent());
             return new  ResponseEntity(comment , HttpStatus.OK);

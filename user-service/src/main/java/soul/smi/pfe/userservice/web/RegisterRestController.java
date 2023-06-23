@@ -33,6 +33,10 @@ public class RegisterRestController {
             throw new RuntimeException(e);
         }
     }
+    @GetMapping("totalNumber")
+    public Long getNumberOfUsers(){
+        return userService.getNumberOfUsers();
+    }
     @PutMapping("updateUserField")
     public ResponseEntity<UserEntityDTO> updateUserField(@RequestBody UpdateFieldOfUser fieldOfUser){
         try {

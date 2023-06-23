@@ -207,6 +207,11 @@ public class BookServiceImpl implements BookService {
         return mapper.fromBook(saved);
     }
 
+    @Override
+    public Long getBooksNumber() {
+        return bookRepo.count();
+    }
+
     private String getToken(){
         KeycloakSecurityContext context = (KeycloakSecurityContext) SecurityContextHolder.getContext().getAuthentication().getCredentials();
         String token ="bearer "+ context.getTokenString();

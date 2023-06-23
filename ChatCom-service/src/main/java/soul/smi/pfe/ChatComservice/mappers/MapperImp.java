@@ -24,7 +24,6 @@ public class MapperImp implements Mapper {
         comment.setOwner(owner);
         commentDTO.setOwner(owner);
         BeanUtils.copyProperties(comment,commentDTO);
-        System.out.println(commentDTO);
         return commentDTO;
     }
 

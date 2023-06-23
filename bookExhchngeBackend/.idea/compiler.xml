@@ -6,12 +6,13 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="ChatCom-service" />
         <module name="eureka-discovry-service" />
-        <module name="user-service" />
         <module name="book-service" />
         <module name="images-service" />
         <module name="gateway-service" />
+        <module name="ChatCom-service" />
+        <module name="user-service" />
+        <module name="statistic-service" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -24,6 +25,7 @@
       <module name="gateway-service" target="11" />
       <module name="getway-service" target="11" />
       <module name="images-service" target="11" />
+      <module name="statistic-service" target="11" />
       <module name="user-service" target="11" />
     </bytecodeTargetLevel>
   </component>
@@ -38,6 +40,7 @@
       <module name="gateway-service" options="-parameters" />
       <module name="getway-service" options="-parameters" />
       <module name="images-service" options="-parameters" />
+      <module name="statistic-service" options="-parameters" />
       <module name="user-service" options="-parameters" />
     </option>
   </component>

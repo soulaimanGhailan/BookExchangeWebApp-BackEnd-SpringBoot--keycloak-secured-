@@ -31,4 +31,5 @@ public interface BookService {
     PageInfo getPageInfoOfSameCategory(String category, int size);
     PageInfo getPageInfoOfUserBooks(String userId, int size);
     BookDTO updateBook(BookDTO book) throws BookNotFoundExeption;
+    Long getBooksNumber();
 }
