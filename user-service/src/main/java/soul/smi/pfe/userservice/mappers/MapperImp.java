@@ -25,6 +25,14 @@ public class MapperImp implements Mapper {
         BeanUtils.copyProperties(user , userDto);
         return userDto;
     }
+    @Override
+    public UserEntityDTO fromUserEntityWithRestImageAllowed(UserEntity user) {
+        UserEntityDTO userDto=new UserEntityDTO();
+        String imageData = pictureRestClient.getImageOfUserAllowed(user.getPictureId()).getPictureContent();
+        userDto.setImageContentBase64(imageData);
+        BeanUtils.copyProperties(user , userDto);
+        return userDto;
+    }
 
     @Override
     public UserEntityDTO fromUserEntityWithLocalImage(UserEntity user, Picture picture) {

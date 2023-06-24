@@ -11,4 +11,6 @@ import soul.smi.pfe.bookservice.model.UserEntity;
 public interface UsersRestClient {
     @GetMapping("/users/{id}")
     UserEntity getUser(@RequestHeader(value = "Authorization", required = true) String authorizationHeader , @PathVariable String id);
+    @GetMapping("/users/top/{id}")
+    UserEntity getTopUser(@PathVariable String id);
 }

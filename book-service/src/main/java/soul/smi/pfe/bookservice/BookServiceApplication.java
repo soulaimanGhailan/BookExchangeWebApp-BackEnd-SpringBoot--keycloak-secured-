@@ -9,6 +9,7 @@ import soul.smi.pfe.bookservice.service.InitBooks;
 
 @SpringBootApplication
 @EnableFeignClients
+
 public class BookServiceApplication {
 
 	public static void main(String[] args) {

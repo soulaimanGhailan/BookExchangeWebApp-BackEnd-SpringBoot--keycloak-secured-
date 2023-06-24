@@ -11,6 +11,8 @@ import soul.smi.pfe.userservice.exeptions.UserNotFoundExeption;
 import soul.smi.pfe.userservice.service.PictureRestClient;
 import soul.smi.pfe.userservice.service.UserService;
 
+import javax.annotation.security.PermitAll;
+
 @RestController
 @RequestMapping("/users")
 @AllArgsConstructor
@@ -36,6 +38,15 @@ public class RegisterRestController {
     @GetMapping("totalNumber")
     public Long getNumberOfUsers(){
         return userService.getNumberOfUsers();
+    }
+
+    @GetMapping("top/{id}")
+    public UserEntityDTO getTopUser(@PathVariable String id){
+        try {
+            return userService.findUserAllowed(id);
+        } catch (UserNotFoundExeption e) {
+            throw new RuntimeException(e);
+        }
     }
     @PutMapping("updateUserField")
     public ResponseEntity<UserEntityDTO> updateUserField(@RequestBody UpdateFieldOfUser fieldOfUser){

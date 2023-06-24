@@ -99,6 +99,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public UserEntityDTO findUserAllowed(String id) throws UserNotFoundExeption {
+        UserEntity user = userRepo.findById(id).orElseThrow(() -> new UserNotFoundExeption("user not found"));
+        return mapper.fromUserEntityWithRestImageAllowed(user);
+    }
+
+    @Override
     public UserEntityDTO findUser(String userId) throws UserNotFoundExeption {
         UserEntity user = userRepo.findById(userId).orElseThrow(() -> new UserNotFoundExeption("user not found"));
         return mapper.fromUserEntityWithRestImage(user);

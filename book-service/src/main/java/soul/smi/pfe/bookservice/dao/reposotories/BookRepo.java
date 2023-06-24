@@ -3,6 +3,7 @@ package soul.smi.pfe.bookservice.dao.reposotories;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import soul.smi.pfe.bookservice.dao.entities.Book;
 import soul.smi.pfe.bookservice.dao.enums.BookCategory;
 
@@ -17,4 +18,6 @@ public interface BookRepo extends JpaRepository<Book, Long> {
     Page<Book> findByBookTitle(String title, Pageable pageable);
     Page<Book> findBooksByBookTitleContains(String keyword , Pageable pageable);
     Page<Book> findBooksByBookCategory(BookCategory category , Pageable pageable);
+    @Query("SELECT b.ownerId, COUNT(b) AS bookCount FROM Book b GROUP BY b.ownerId ORDER BY bookCount DESC")
+    List<Object[]> findTopOwnersByBookCount();
 }

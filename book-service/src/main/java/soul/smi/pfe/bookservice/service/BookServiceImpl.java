@@ -17,8 +17,10 @@ import soul.smi.pfe.bookservice.exeptions.BookNotFoundExeption;
 import soul.smi.pfe.bookservice.exeptions.UserNotFoundExeption;
 import soul.smi.pfe.bookservice.mappers.Mapper;
 import soul.smi.pfe.bookservice.model.Picture;
+import soul.smi.pfe.bookservice.model.TopOwner;
 import soul.smi.pfe.bookservice.model.UserEntity;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -210,6 +212,24 @@ public class BookServiceImpl implements BookService {
     @Override
     public Long getBooksNumber() {
         return bookRepo.count();
+    }
+
+    @Override
+    public List<TopOwner> getTopOwners(int range) {
+        List<TopOwner> tops = new ArrayList<>() ;
+        List<Object[]> topOwners = bookRepo.findTopOwnersByBookCount();
+        if(topOwners.size() < range) throw new RuntimeException("no enough users for range of top" + range+ " users");
+        List<Object[]> topOwnersRange = topOwners.subList(0, range);
+        for (Object[] ownerData : topOwnersRange) {
+            String ownerId = (String) ownerData[0];
+            Long bookCount = (Long) ownerData[1];
+            UserEntity topUser = usersRestClient.getTopUser(ownerId);
+            TopOwner topOwner = new TopOwner() ;
+            topOwner.setBooksNumber(bookCount);
+            topOwner.setOwner(topUser);
+            tops.add(topOwner);
+        }
+        return tops;
     }
 
     private String getToken(){

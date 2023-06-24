@@ -31,6 +31,7 @@ public class SpringSecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
         http.csrf().disable();
         http.authorizeRequests()
                 .antMatchers("/users/totalNumber").permitAll()
+                .antMatchers("/users/top/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .httpBasic();

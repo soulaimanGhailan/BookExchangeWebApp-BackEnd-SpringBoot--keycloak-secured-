@@ -13,6 +13,10 @@ import soul.smi.pfe.imagesservice.service.PicturesService;
 public class PictureRestController {
     private PicturesService picturesService;
     private Mapper mapper;
+    @GetMapping("allowed/{id}")
+    public PictureDto getAllowedPic(@PathVariable Long id){
+        return picturesService.getPicture(id);
+    }
     @GetMapping("{id}")
     public PictureDto getPic(@PathVariable Long id){
         return picturesService.getPicture(id);

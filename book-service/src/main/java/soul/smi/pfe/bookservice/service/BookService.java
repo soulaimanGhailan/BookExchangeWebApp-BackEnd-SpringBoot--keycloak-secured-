@@ -5,6 +5,7 @@ import soul.smi.pfe.bookservice.dtos.BookDTO;
 import soul.smi.pfe.bookservice.dtos.PageInfo;
 import soul.smi.pfe.bookservice.exeptions.BookNotFoundExeption;
 import soul.smi.pfe.bookservice.exeptions.UserNotFoundExeption;
+import soul.smi.pfe.bookservice.model.TopOwner;
 import soul.smi.pfe.bookservice.model.UserEntity;
 
 import java.util.List;
@@ -32,4 +33,5 @@ public interface BookService {
     PageInfo getPageInfoOfUserBooks(String userId, int size);
     BookDTO updateBook(BookDTO book) throws BookNotFoundExeption;
     Long getBooksNumber();
+    List<TopOwner> getTopOwners(int range);
 }

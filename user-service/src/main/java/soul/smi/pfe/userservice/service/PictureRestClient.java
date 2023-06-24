@@ -11,7 +11,8 @@ public interface PictureRestClient {
     @PutMapping("/pictures/updatePicture/{picId}/{picName}")
     Picture updatePicture(@RequestHeader(value = "Authorization", required = true) String authorizationHeader ,
                           @RequestBody String imageBase64, @PathVariable Long picId , @PathVariable String picName);
-    @PostMapping("/createImage/{picName}")
-     Picture createPic(@RequestBody String imageBase64 , @PathVariable String picName);
-
+//    @PostMapping("/createImage/{picName}")
+//     Picture createPic(@RequestBody String imageBase64 , @PathVariable String picName);
+    @GetMapping("/pictures/allowed/{id}")
+    Picture getImageOfUserAllowed(@PathVariable Long id);
 }

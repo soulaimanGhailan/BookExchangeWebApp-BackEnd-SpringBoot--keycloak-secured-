@@ -29,7 +29,11 @@ public class SpringSecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
         http.cors();
         http.headers().frameOptions().disable();
         http.csrf().disable();
-        http.authorizeRequests().anyRequest().authenticated();
+        http.authorizeRequests()
+                .antMatchers("/pictures/allowed/**").permitAll()
+                .anyRequest().authenticated()
+                .and()
+                .httpBasic();
     }
 
 }

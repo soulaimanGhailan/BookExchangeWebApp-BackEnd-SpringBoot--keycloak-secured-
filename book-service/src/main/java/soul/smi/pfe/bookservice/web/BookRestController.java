@@ -8,10 +8,13 @@ import soul.smi.pfe.bookservice.dtos.BookDTO;
 import soul.smi.pfe.bookservice.dtos.PageInfo;
 import soul.smi.pfe.bookservice.exeptions.BookNotFoundExeption;
 import soul.smi.pfe.bookservice.exeptions.UserNotFoundExeption;
+import soul.smi.pfe.bookservice.model.TopOwner;
 import soul.smi.pfe.bookservice.model.UserEntity;
 import soul.smi.pfe.bookservice.service.BookService;
 
 
+import javax.annotation.security.PermitAll;
+import javax.ws.rs.Path;
 import java.io.IOException;
 import java.util.List;
 
@@ -25,6 +28,10 @@ public class BookRestController {
     @GetMapping("totalNumber")
     public Long getNumberOfBooks(){
         return bookService.getBooksNumber();
+    }
+    @GetMapping("topOwners/{number}")
+    public List<TopOwner> getTopOwners(@PathVariable int number){
+        return bookService.getTopOwners(number);
     }
     @GetMapping("/pageInfo")
     public PageInfo getPageInfoAllBook(@RequestParam(name = "size" , defaultValue = "5")int size){

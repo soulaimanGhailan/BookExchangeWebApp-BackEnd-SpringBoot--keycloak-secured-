@@ -11,6 +11,7 @@ public interface Mapper {
     UserAddress fromAddressDTO(AddressDTO addressDTO);
     AddressDTO fromAddress(UserAddress address);
     UserEntityDTO fromUserEntityWithRestImage(UserEntity user);
+    UserEntityDTO fromUserEntityWithRestImageAllowed(UserEntity user);
     UserEntityDTO fromUserEntityWithLocalImage(UserEntity user , Picture picture);
     UserEntity fromUserEntityDTO(UserEntityDTO user);
 }
